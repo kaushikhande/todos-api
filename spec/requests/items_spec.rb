@@ -61,4 +61,29 @@ RSpec.describe 'Items API' do
   end
 
 
+  describe 'POST /todos/:todo_id/items' do
+    let(:valid_attributes) {{ name: 'Visit Narnia', done: false}}
+
+    context 'when request attributes are valid' do
+      before { post "/todos/#{todo_id}/items", params: valid_attributes}
+
+      it 'returns status code 201' do
+        expect(response).to have_http_status(201)
+      end 
+    end
+
+    context 'when request attributes are invalid' do
+      before { post "/todos/#{todo_id}/items", params: {} }
+
+      it 'returns response code 422' do
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns error message' do |variable|
+        expect(response.body).to match(/Validation failed: Name can't be blank/)
+      end
+    end
+  end
+
+
 end
