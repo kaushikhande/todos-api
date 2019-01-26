@@ -85,5 +85,40 @@ RSpec.describe 'Items API' do
     end
   end
 
+  describe 'PUT /todos/:todo_id/items/:id' do
+    let(:valid_attributes) {{ name: 'Visit Narnia', done: false }}
+    before { put "/todos/#{todo_id}/items/#{id}", params: valid_attributes }
 
+    context 'when item exists' do
+      
+      it 'returns response code 204' do
+        expect(response).to have_http_status(204)
+      end
+
+      it 'returns updated attributes' do
+        updated_item = Item.find(id)
+        expect(updated_item.name).to eq('Visit Narnia')
+      end
+    end
+
+    context 'when item does not exists' do
+      let(:id) { 0 }
+
+      it 'returns response code 404' do
+        expect(response).to have_http_status(404)
+      end
+
+      it 'returns a not found message' do
+        expect(response.body).to match(/Couldn't find Item/)
+      end
+    end
+  end
+
+  describe 'DELETE /todos/:todo_id/items/:id' do
+    before { delete "/todos/#{todo_id}/items/#{id}" }
+
+    it 'returns response code 204' do
+      expect(response).to have_http_status(204)
+    end
+  end
 end

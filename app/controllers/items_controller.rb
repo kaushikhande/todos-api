@@ -16,6 +16,16 @@ class ItemsController < ApplicationController
     @todo.items.create!(item_params)
     json_response(@todo, :created)
   end
+
+  def update
+    @item.update(item_params)
+    head :no_content
+  end
+
+  def destroy
+    @item.destroy
+    head :no_content
+  end
   
   private
   
