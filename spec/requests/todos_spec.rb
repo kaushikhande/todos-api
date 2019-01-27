@@ -74,7 +74,7 @@ RSpec.describe 'Todos Api', type: :request do
           .to match(/Validation failed: Created by can't be blank/)
       end
     end
-
+  end
     # Test suite for PUT /todos/:id
     describe 'PUT /todos/:id' do
       let(:valid_attributes) { { title: 'Shopping' } }
@@ -100,5 +100,5 @@ RSpec.describe 'Todos Api', type: :request do
         expect(response).to have_http_status(204)
       end
     end
-  end
+  # end
 end
